@@ -22,6 +22,17 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            -webkit-touch-callout: none;
+        }
+
+        img {
+            pointer-events: none;
+            -webkit-user-drag: none;
         }
 
         html {
@@ -1881,27 +1892,27 @@
                     <div class="contact-icon"><i class="fas fa-envelope"></i></div>
                     <div class="contact-text">
                         <span>Email</span>
-                        <a href="mailto:avulakalyan741@gmail.com">avulakalyan741@gmail.com</a>
+                        <p>XXXXXXXX@XXXXX.XXX</p>
                     </div>
                 </div>
                 <div class="contact-item">
                     <div class="contact-icon"><i class="fas fa-phone"></i></div>
                     <div class="contact-text">
                         <span>Phone</span>
-                        <p>+91 7993431967</p>
+                        <p>+XX XXXXXXXXXX</p>
                     </div>
                 </div>
                 <div class="contact-item">
                     <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
                     <div class="contact-text">
                         <span>Location</span>
-                        <p>Telangana, India</p>
+                        <p>XXXXXXXXX, XXXXX</p>
                     </div>
                 </div>
                 <div class="social-links">
-                    <a href="https://www.linkedin.com/in/kalyan-reddy-6b2904271" target="_blank" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="https://github.com" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
-                    <a href="mailto:avulakalyan741@gmail.com" class="social-link"><i class="fas fa-envelope"></i></a>
+                    <a href="#" onclick="return false;" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" onclick="return false;" class="social-link"><i class="fab fa-github"></i></a>
+                    <a href="#" onclick="return false;" class="social-link"><i class="fas fa-envelope"></i></a>
                 </div>
             </div>
             <div class="terminal">
@@ -1923,10 +1934,10 @@
                     <span class="output">ASP.NET, C#, SQL Server, React Native, REST APIs</span>
                 </div>
                 <div class="terminal-line">
-                    <span class="prompt">kalyan@dev:~$</span> <span class="command">./hire_me.sh</span>
+                    <span class="prompt">kalyan@dev:~$</span> <span class="command">./contact.sh</span>
                 </div>
                 <div class="terminal-line">
-                    <span class="output">Ready to contribute to your team!</span>
+                    <span class="output">[REDACTED] - Contact via LinkedIn</span>
                 </div>
                 <div class="terminal-line">
                     <span class="prompt">kalyan@dev:~$</span> <span class="typing-cursor"></span>
@@ -1947,6 +1958,64 @@
     </div>
 
     <script>
+        // ===== BASIC ANTI-INSPECT PROTECTION =====
+        // Note: Client-side protection is not bulletproof, but adds friction.
+        (function() {
+            // Disable right-click
+            document.addEventListener('contextmenu', e => e.preventDefault());
+
+            // Disable text selection (except inputs)
+            document.addEventListener('selectstart', e => {
+                if (!['INPUT', 'TEXTAREA'].includes(e.target.tagName)) e.preventDefault();
+            });
+
+            // Disable drag
+            document.addEventListener('dragstart', e => e.preventDefault());
+
+            // Block common devtools keys
+            document.addEventListener('keydown', e => {
+                // F12
+                if (e.keyCode === 123) { e.preventDefault(); return false; }
+                // Ctrl+Shift+I / Ctrl+Shift+J / Ctrl+Shift+C
+                if (e.ctrlKey && e.shiftKey && [73, 74, 67].includes(e.keyCode)) {
+                    e.preventDefault(); return false;
+                }
+                // Ctrl+U (view source)
+                if (e.ctrlKey && e.keyCode === 85) { e.preventDefault(); return false; }
+                // Ctrl+S (save page)
+                if (e.ctrlKey && e.keyCode === 83) { e.preventDefault(); return false; }
+                // Ctrl+Shift+K (Firefox console)
+                if (e.ctrlKey && e.shiftKey && e.keyCode === 75) { e.preventDefault(); return false; }
+            });
+
+            // Devtools open detection (size-based)
+            let devtoolsWarned = false;
+            const threshold = 160;
+            setInterval(() => {
+                const widthDiff = window.outerWidth - window.innerWidth > threshold;
+                const heightDiff = window.outerHeight - window.innerHeight > threshold;
+                if (widthDiff || heightDiff) {
+                    if (!devtoolsWarned) {
+                        devtoolsWarned = true;
+                        document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#0a0a0a;color:#ff3a3a;font-family:monospace;text-align:center;padding:20px;"><div><h1 style="font-size:2rem;margin-bottom:20px;">ACCESS DENIED</h1><p>Developer tools are disabled on this page.</p><p style="margin-top:10px;opacity:0.6;">Please close devtools and refresh.</p></div></div>';
+                    }
+                }
+            }, 1000);
+
+            // Disable console methods
+            try {
+                const noop = () => {};
+                ['log', 'warn', 'error', 'info', 'debug', 'table', 'dir'].forEach(m => {
+                    console[m] = noop;
+                });
+            } catch(e) {}
+
+            // Debugger trap
+            setInterval(() => {
+                (function() { return false; })['constructor']('debugger')['call']();
+            }, 4000);
+        })();
+
         // Loading Screen
         window.addEventListener('load', () => {
             setTimeout(() => {
